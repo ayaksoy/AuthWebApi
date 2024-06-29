@@ -6,11 +6,14 @@ using System.Security.Claims;
 using AuthWebApi.Model;
 using AuthWebApi.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors;
+using AuthWebApi.Dto;
 
 namespace AutWebApiExample.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("Policy")]
     public class AuthController : ControllerBase
     {
         private readonly ApplicationDbContext db;
@@ -50,10 +53,26 @@ namespace AutWebApiExample.Controllers
         }
 
         [HttpGet("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Ok(new { success = true });
+        }
+        [HttpPatch("create")]
+        public async Task<IActionResult> Create([FromBody] UserCreateRequest newUser)
+        {
+            var securityCheck = db.Users.FirstOrDefault(x => x.Email == newUser.Email);
+            if (securityCheck != null)
+                return BadRequest(new { succes = false, message = "Girdiginiz Emaile ait bir hesap bulunmakta. Farkli bir email ile kayit olmayi deneyin" });
+            var user = new User();
+            user.Email = newUser.Email;
+            user.Password = newUser.Password;
+            user.Username = newUser.Username;
+            user.Name = newUser.Name;
+            user.Surname = newUser.Surname;
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
+            return Ok(new { succes = true, message = "Kullanıcı başarıyla oluşturuldu" });
         }
     }
 }

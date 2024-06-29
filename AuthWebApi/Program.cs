@@ -24,15 +24,16 @@ namespace AutWebApiExample
                 options.AccessDeniedPath = "/api/acces-denied";//yetkisiz giriş sayfası yönlendirmesi
             });
 
+            var Allow = "Policy";
             builder.Services.AddCors(options =>
             {
-                options.AddDefaultPolicy(build =>
-    {
-        build.WithOrigins("*")
-.AllowAnyMethod()
-.AllowAnyHeader()
-.AllowCredentials();
-    });
+                options.AddPolicy(Allow,
+                Policy =>
+                {
+                    Policy.WithOrigins("*")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
             });
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string is not found");
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
@@ -54,6 +55,7 @@ namespace AutWebApiExample
 
             app.UseAuthentication();//Kullanıcı girişine izin verme
             app.UseAuthorization();
+            app.UseCors(Allow);
 
 
             app.MapControllers();
