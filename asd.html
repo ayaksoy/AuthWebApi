@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Şifre Değiştirme</title>
+		<style>
+			.error {
+				color: red;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<form id="changePasswordForm">
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email" required /><br /><br />
+
+			<label for="oldpassword">Eski Şifre:</label>
+			<input
+				type="password"
+				id="oldpassword"
+				name="oldpassword"
+				required
+			/><br /><br />
+
+			<label for="newpassword">Yeni Şifre:</label>
+			<input
+				type="password"
+				id="newpassword"
+				name="newpassword"
+				required
+			/><br /><br />
+
+			<label for="newpasswordRepeat">Yeni Şifre Tekrar:</label>
+			<input
+				type="password"
+				id="newpasswordRepeat"
+				name="newpasswordRepeat"
+				required
+			/><br /><br />
+
+			<span class="error" id="errorMessage">Şifreler eşleşmiyor!</span
+			><br /><br />
+
+			<button type="submit">Değiştir</button>
+		</form>
+
+		<script>
+			const newPassword = document.getElementById("newpassword");
+			const newPasswordRepeat = document.getElementById("newpasswordRepeat");
+			const errorMessage = document.getElementById("errorMessage");
+
+			function checkPasswords() {
+				if (newPassword.value !== newPasswordRepeat.value) {
+					errorMessage.style.display = "block";
+				} else {
+					errorMessage.style.display = "none";
+				}
+			}
+
+			newPassword.addEventListener("input", checkPasswords);
+			newPasswordRepeat.addEventListener("input", checkPasswords);
+		</script>
+	</body>
+</html>

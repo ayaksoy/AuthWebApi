@@ -31,9 +31,9 @@ namespace AutWebApiExample.Controllers
             {
                 var claims = new List<Claim>
             {
-            new Claim(ClaimTypes.Email,isUser.Email),
-            new Claim(ClaimTypes.Name,isUser.Name),
-            new Claim(ClaimTypes.Role,"admin")
+                new Claim(ClaimTypes.Email,isUser.Email),
+                new Claim(ClaimTypes.Name,isUser.Name),
+                new Claim(ClaimTypes.Role,"admin")
             };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -58,10 +58,10 @@ namespace AutWebApiExample.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Ok(new { success = true });
         }
-        [HttpPatch("create")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] UserCreateRequest newUser)
         {
-            var securityCheck = db.Users.FirstOrDefault(x => x.Email == newUser.Email);
+            var securityCheck = await db.Users.FirstOrDefaultAsync(x => x.Email == newUser.Email);
             if (securityCheck != null)
                 return BadRequest(new { succes = false, message = "Girdiginiz Emaile ait bir hesap bulunmakta. Farkli bir email ile kayit olmayi deneyin" });
             var user = new User();
@@ -73,6 +73,18 @@ namespace AutWebApiExample.Controllers
             db.Users.Add(user);
             await db.SaveChangesAsync();
             return Ok(new { succes = true, message = "Kullanıcı başarıyla oluşturuldu" });
+        }
+        [HttpPut("update")]
+        public async Task<IActionResult> ChangePassword([FromBody] UpdateUserRequest newPassword)
+        {
+            var securityCheck = await db.Users.FirstOrDefaultAsync(x => x.Email == newPassword.Email);
+            if (securityCheck == null)
+                return BadRequest(new { succes = false, message = "Girdiginiz Emaile ait bir hesap bulunamadi" });
+            if (securityCheck.Password != newPassword.OldPassword)
+                return BadRequest(new { succes = false, message = "Girdiginiz sifre Hatali" });
+            securityCheck.Password = newPassword.NewPassword;
+            await db.SaveChangesAsync();
+            return Ok(new { succes = true, message = "Sifre başarıyla degistirildi" });
         }
     }
 }
