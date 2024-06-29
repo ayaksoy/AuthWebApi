@@ -63,7 +63,7 @@ namespace AutWebApiExample.Controllers
         {
             var securityCheck = await db.Users.FirstOrDefaultAsync(x => x.Email == newUser.Email);
             if (securityCheck != null)
-                return BadRequest(new { succes = false, message = "Girdiginiz Emaile ait bir hesap bulunmakta. Farkli bir email ile kayit olmayi deneyin" });
+                return BadRequest("Girdiginiz Emaile ait bir hesap bulunmakta. Farkli bir email ile kayit olmayi deneyin");
             var user = new User();
             user.Email = newUser.Email;
             user.Password = newUser.Password;

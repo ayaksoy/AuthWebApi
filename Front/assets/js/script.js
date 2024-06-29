@@ -183,3 +183,70 @@ $.ajax({
     
 })
 })
+
+
+$("#registerForm").submit(function(event){
+    event.preventDefault();
+    var email=$("#Email").val();
+    var password=$("#Password").val();
+    var name = $("#Name").val();
+    var surname = $("#Surname").val();
+    var registerData={
+        Email:email,
+        Password:password,
+        Name : name,
+        Surname : surname
+    };
+
+
+$.ajax({
+    url:'http://localhost:5026/api/Auth/create',
+    method:"POST",
+    crossDomain:true,
+    dataType:"json",
+    headers:{
+        'accept': '*/*',
+        'Content-Type':'application/json'
+    },
+    data:JSON.stringify(registerData),
+    success: function(resultt){
+        alert(resultt.message)
+    },
+    error: function(_resultt){
+        alert(_resultt.responseText)
+    }
+    
+})
+})
+
+$("#forgotPasswordForm").submit(function(event){
+    event.preventDefault();
+    var email=$("#Email").val();
+    var password=$("#Password").val();
+    var newPassword = $("#NewPassword").val();
+    var registerData={
+        Email:email,
+        OldPassword:password,
+        NewPassword : newPassword,
+    };
+
+
+$.ajax({
+    url:'http://localhost:5026/api/Auth/update',
+    method:"PUT",
+    crossDomain:true,
+    dataType:"json",
+    headers:{
+        'accept': '*/*',
+        'Content-Type':'application/json'
+    },
+    data:JSON.stringify(registerData),
+    success: function(resultt){
+        alert(resultt.message)
+    },
+    error: function(_resultt){
+        alert(_resultt.responseText)
+    }
+    
+})
+})
