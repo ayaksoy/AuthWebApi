@@ -209,8 +209,8 @@ $.ajax({
         'Content-Type':'application/json'
     },
     data:JSON.stringify(registerData),
-    success: function(resultt){
-        alert(resultt.message)
+    success: function(ahmet){
+        alert(ahmet.message)
     },
     error: function(_resultt){
         alert(_resultt.responseText)
