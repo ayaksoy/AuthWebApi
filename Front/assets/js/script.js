@@ -174,9 +174,8 @@ $.ajax({
         'Content-Type':'application/json'
     },
     data:JSON.stringify(loginData),
-    success: function(result){
-        alert(result.message)
-    },
+    success: login()
+    ,
     error: function(result){
         alert("Giriş Başarısız")
     }
@@ -249,4 +248,71 @@ $.ajax({
     }
     
 })
+})
+function login (){
+    window.parent.postMessage('login-success','*');
+}
+
+
+
+$("#addProductForm").submit(function(event){
+    event.preventDefault();
+    var email=$("#Email").val();
+    var password=$("#Password").val();
+    var name = $("#Name").val();
+    var surname = $("#Surname").val();
+    var registerData={
+        Email:email,
+        Password:password,
+        Name : name,
+        Surname : surname
+    };
+
+
+$.ajax({
+    url:'http://localhost:5026/api/Auth/create',
+    method:"POST",
+    crossDomain:true,
+    dataType:"json",
+    headers:{
+        'accept': '*/*',
+        'Content-Type':'application/json'
+    },
+    data:JSON.stringify(registerData),
+    success: function(ahmet){
+        alert(ahmet.message)
+    },
+    error: function(_resultt){
+        alert(_resultt.responseText)
+    }
+    
+})
+})
+
+$("#addCategoryForm").submit(function(event){
+        var categoryName=$("#Name").val();
+    var categoryDescription=$("#Description").val();
+    var categoryData={
+        Name:categoryName,
+        Description:categoryDescription
+    };
+
+
+    $.ajax({
+        url:'http://localhost:5026/api/Category',
+        method:"POST",
+        crossDomain:true,
+        dataType:"json",
+        headers:{
+            'Content-Type':'application/json'
+        },
+        data:JSON.stringify(categoryData),
+        success: function(result){
+            alert(result)
+        },
+        error: function(result){
+            alert(result.responseText)
+        }
+        
+    })
 })

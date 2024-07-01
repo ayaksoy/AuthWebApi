@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AuthWebApi.Data;
 using AuthWebApi.Model;
+using AuthWebApi.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthWebApi.Service.Model
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
 
         ApplicationDbContext db;

@@ -1,94 +1,70 @@
 <!DOCTYPE html>
 <html lang="tr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>TabControl</title>
-		<link
-			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="assets/css/style.css" />
-	</head>
-	<body>
-		<div class="container">
-			<ul class="nav nav-tabs" id="myTab" role="tablist">
-				<li class="nav-item">
-					<a
-						class="nav-link active"
-						id="login-tab"
-						data-toggle="tab"
-						href="#login"
-						role="tab"
-						aria-controls="login"
-						aria-selected="true"
-						>Login</a
-					>
-				</li>
-				<li class="nav-item">
-					<a
-						class="nav-link"
-						id="register-tab"
-						data-toggle="tab"
-						href="#register"
-						role="tab"
-						aria-controls="register"
-						aria-selected="false"
-						>Register</a
-					>
-				</li>
-				<li class="nav-item">
-					<a
-						class="nav-link"
-						id="forgot-password-tab"
-						data-toggle="tab"
-						href="#forgot-password"
-						role="tab"
-						aria-controls="forgot-password"
-						aria-selected="false"
-						>Forgot Password</a
-					>
-				</li>
-			</ul>
-			<div class="tab-content" id="myTabContent">
-				<div
-					class="tab-pane fade show active"
-					id="login"
-					role="tabpanel"
-					aria-labelledby="login-tab"
-				>
-					<iframe
-						src="login.html"
-						style="width: 100%; height: 600px; border: none"
-					></iframe>
-				</div>
-				<div
-					class="tab-pane fade"
-					id="register"
-					role="tabpanel"
-					aria-labelledby="register-tab"
-				>
-					<iframe
-						src="register.html"
-						style="width: 100%; height: 600px; border: none"
-					></iframe>
-				</div>
-				<div
-					class="tab-pane fade"
-					id="forgot-password"
-					role="tabpanel"
-					aria-labelledby="forgot-password-tab"
-				>
-					<iframe
-						src="forgotPassword.html"
-						style="width: 100%; height: 600px; border: none"
-					></iframe>
-				</div>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>TabControl</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+	<div class="container">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="forgot-password-tab" data-toggle="tab" href="#forgot-password" role="tab" aria-controls="forgot-password" aria-selected="false">Forgot Password</a>
+			</li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+				<iframe src="login.html" id="login-frame" style="width: 100%; height: 600px; border: none"></iframe>
+			</div>
+			<div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+				<iframe src="register.html" style="width: 100%; height: 600px; border: none"></iframe>
+			</div>
+			<div class="tab-pane fade" id="forgot-password" role="tabpanel" aria-labelledby="forgot-password-tab">
+				<iframe src="forgotPassword.html" style="width: 100%; height: 600px; border: none"></iframe>
 			</div>
 		</div>
+		<ul class="nav nav-tabs d-none" id="adminTab" role="tablist">
+			<li class="nav-item">
+				<a class="nav-link active" id="product-tab" data-toggle="tab" href="#product" role="tab" aria-controls="product" aria-selected="true">Product</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab" aria-controls="category" aria-selected="false">Category</a>
+			</li>
+		</ul>
+		<div class="tab-content d-none" id="adminTabContent">
+			<div class="tab-pane fade show active" id="product" role="tabpanel" aria-labelledby="product-tab">
+				<iframe src="product.html" style="width: 100%; height: 600px; border: none"></iframe>
+			</div>
+			<div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
+				<iframe src="category.html" style="width: 100%; height: 600px; border: none"></iframe>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script>
+		function onLoginSuccess() {
+			document.getElementById('myTab').classList.add('d-none');
+			document.getElementById('myTabContent').classList.add('d-none');
+			document.getElementById('adminTab').classList.remove('d-none');
+			document.getElementById('adminTabContent').classList.remove('d-none');
+		}
 
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	</body>
+		// Example: Listen for a message from the iframe indicating a successful login
+		window.addEventListener('message', function(event) {
+			if (event.data === 'login-success') {
+				onLoginSuccess();
+			}
+		});
+	</script>
+</body>
 </html>
